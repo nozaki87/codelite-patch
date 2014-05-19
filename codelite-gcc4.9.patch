@@ -1,0 +1,23 @@
+diff -cr ../orig/codelite-5.4/Plugin/search_thread.cpp ./Plugin/search_thread.cpp
+*** ../orig/codelite-5.4/Plugin/search_thread.cpp	2014-01-11 22:53:45.000000000 -0800
+--- ./Plugin/search_thread.cpp	2014-05-18 23:19:38.026599589 -0700
+***************
+*** 187,192 ****
+--- 187,193 ----
+      // Send startup message to main thread
+      if ( m_notifiedWindow || data->GetOwner() ) {
+          wxCommandEvent event(wxEVT_SEARCH_THREAD_SEARCHSTARTED, GetId());
++ 	wxEvent * dummyevent = event.Clone();
+          event.SetClientData(new SearchData(*data));
+          //set the rquested output tab
+          event.SetInt(data->UseNewTab() ? 1 : 0);
+***************
+*** 196,201 ****
+--- 197,203 ----
+              // since we are in if ( m_notifiedWindow || data->GetOwner() ) block...
+              ::wxPostEvent(m_notifiedWindow, event);
+          }
++ 	delete dummyevent;
+      }
+  
+      for (size_t i=0; i<fileList.Count(); i++) {
